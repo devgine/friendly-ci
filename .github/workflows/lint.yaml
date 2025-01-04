@@ -1,0 +1,21 @@
+---
+name: "Yaml Lint"
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - '**.yaml'
+      - '**.yml'
+      - .yamllint
+
+jobs:
+  job-id:
+    runs-on: ubuntu-latest
+    name: "Yaml lint"
+    container:
+      image: ghcr.io/devgine/yamllint:latest
+    steps:
+      - name: 'Run'
+        run: . -s -c .yamllint
