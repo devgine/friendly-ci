@@ -14,6 +14,9 @@ jobs:
     name: "Yaml lint"
     container:
       image: ghcr.io/devgine/yamllint:1.0.0
+
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: 'Run'
         run: yamllint . -s -c .yamllint
