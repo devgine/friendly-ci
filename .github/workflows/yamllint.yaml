@@ -71,12 +71,12 @@ jobs:
           sbom: false
           platforms: linux/amd64,linux/arm64
           tags: |
-            ghcr.io/devgine/yamllint:$VERSION
-            {{ $LATEST && 'ghcr.io/devgine/yamllint:latest' || ''}}
+            ghcr.io/devgine/yamllint:${{ env.VERSION }}
+            ${{ env.LATEST && 'ghcr.io/devgine/yamllint:latest' || ''}}
           context: .
           file: ./Dockerfile
           build-args: |
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ env.build_date }}
-            BUILD_VERSION=v$VERSION
-            IMAGE_TAG=ghcr.io/devgine/yamllint:$VERSION
+            BUILD_VERSION=v${{ env.VERSION }}
+            IMAGE_TAG=ghcr.io/devgine/yamllint:${{ env.VERSION }}
