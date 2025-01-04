@@ -8,6 +8,9 @@ on:
       - '**.yml'
       - .yamllint
 
+permissions:
+  contents: 'read'
+
 jobs:
   yamllint:
     runs-on: ubuntu-latest
