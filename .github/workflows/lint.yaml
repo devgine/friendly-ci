@@ -3,19 +3,17 @@ name: "Yaml Lint"
 
 on:
   push:
-    branches:
-      - main
     paths:
       - '**.yaml'
       - '**.yml'
       - .yamllint
 
 jobs:
-  job-id:
+  yamllint:
     runs-on: ubuntu-latest
     name: "Yaml lint"
     container:
-      image: ghcr.io/devgine/yamllint:latest
+      image: ghcr.io/devgine/yamllint:1.0.0
     steps:
       - name: 'Run'
-        run: . -s -c .yamllint
+        run: yamllint . -s -c .yamllint

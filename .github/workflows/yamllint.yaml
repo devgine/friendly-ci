@@ -6,13 +6,17 @@ on:
     branches:
       - main
     paths:
-      - yamllint/Dockerfile
+      - Dockerfile
       - .github/workflows/yamllint.yaml
 
 permissions:
   contents: 'read'
   id-token: 'write'
   packages: write
+
+env:
+  VERSION: '1.0.0'
+  LATEST: true
 
 jobs:
   scan:
@@ -26,7 +30,7 @@ jobs:
       - name: 'run kics Scan'
         uses: checkmarx/kics-github-action@v2.1.3
         with:
-          path: 'yamllint'
+          path: .
           token: ${{ secrets.GITHUB_TOKEN }}
           enable_comments: true
           exclude_queries: 'd3499f6d-1651-41bb-a9a7-de925fea487b'
@@ -35,11 +39,9 @@ jobs:
 #        uses: github/codeql-action/upload-sarif@v3
 #        with:
 #          sarif_file: results-dir/results.sarif
+
   packaging:
     needs: scan
-    env:
-      VERSION: '1.0.0'
-      LATEST: true
     runs-on: ubuntu-latest
     name: "[Build] Yaml Lint"
     steps:
@@ -74,9 +76,18 @@ jobs:
             ghcr.io/devgine/yamllint:${{ env.VERSION }}
             ${{ env.LATEST && 'ghcr.io/devgine/yamllint:latest' || ''}}
           context: .
-          file: ./yamllint/Dockerfile
+          file: Dockerfile
           build-args: |
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ env.build_date }}
             BUILD_VERSION=v${{ env.VERSION }}
             IMAGE_TAG=ghcr.io/devgine/yamllint:${{ env.VERSION }}
+
+  test:
+    runs-on: ubuntu-latest
+    name: "[Test] Yaml lint"
+    container:
+      image: ghcr.io/devgine/yamllint:${{ env.VERSION }}
+    steps:
+      - name: 'Run'
+        run: yamllint . -s -c .yamllint
