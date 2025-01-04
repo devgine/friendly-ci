@@ -74,7 +74,7 @@ jobs:
             ghcr.io/devgine/yamllint:${{ env.VERSION }}
             ${{ env.LATEST && 'ghcr.io/devgine/yamllint:latest' || ''}}
           context: .
-          file: ./Dockerfile
+          file: ./yamllint/Dockerfile
           build-args: |
             VCS_REF=${{ github.sha }}
             BUILD_DATE=${{ env.build_date }}
