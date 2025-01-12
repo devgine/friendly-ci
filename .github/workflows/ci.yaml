@@ -70,7 +70,7 @@ jobs:
           token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           push: true
           provenance: false
-          sbom: true
+          sbom: false
           tags: |
             ghcr.io/devgine/yamllint:${{ env.VERSION }}
             ${{ env.LATEST && 'ghcr.io/devgine/yamllint:latest' || ''}}
