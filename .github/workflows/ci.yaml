@@ -70,8 +70,7 @@ jobs:
           token: ${{ secrets.DEPOT_PROJECT_TOKEN }}
           push: true
           provenance: false
-          sbom: false
-          platforms: linux/amd64,linux/arm64
+          sbom: true
           tags: |
             ghcr.io/devgine/yamllint:${{ env.VERSION }}
             ${{ env.LATEST && 'ghcr.io/devgine/yamllint:latest' || ''}}
